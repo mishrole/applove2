@@ -1,4 +1,6 @@
-var texto = ["PROYECTO 1", "PROYECTO 2", "PROYECTO 3", "PROYECTO 4", "PROYECTO 5", "PROYECTO 6", "PROYECTO 7", "PROYECTO 8", "PROYECTO 9"];
+/* Insertar previsualización de galería */
+
+var texto = ["proyecto 1", "proyecto 2", "proyecto 3", "proyecto 4", "proyecto 5", "proyecto 6", "proyecto 7", "proyecto 8", "proyecto 9"];
 
 function galleryText(param){
 	return "assets/img/gallery/"+(param+1)+".jpg";
@@ -9,31 +11,45 @@ function insert(elem){
 	var figure = document.createElement("figure");
 		figure.setAttribute("class", "figure-work");
 
-	var a = document.createElement("a");
-
 	var img = document.createElement("img");
 	var indice = texto.indexOf(elem);
 		img.setAttribute("src", galleryText(indice));
 		img.setAttribute("alt", elem);
-	var textoImg = document.createElement("figcaption");
+		img.setAttribute("class", "img-gallery");
+	var textoImagen = document.createElement("figcaption");
 	var span = document.createElement("span");
 		span.innerText = texto[indice]
 
-	textoImg.appendChild(span);
-	/*	a.appendChild(img)
-	figure.appendChild(a); */
+	textoImagen.appendChild(span);
 	figure.appendChild(img);
-	figure.appendChild(textoImg);
+	figure.appendChild(textoImagen);
 	div.appendChild(figure);
+
+	/* Insertar muestra de modal */
+
+	img.addEventListener('click',function(){
+		
+		var modal = document.getElementById("modal");
+		modalImagen = document.getElementById("imagenes");
+
+		modal.style.display = "block";
+		modalImagen.src = this.src;
+	});
 
 	return div;
 
 }
 
 window.addEventListener("load", function(e){
+
 	var gallery = texto.forEach(function(e){
 		document.getElementById("gallery").appendChild(insert(e));
 	});
 
-	return gallery;
-})
+	var close = document.getElementsByClassName("close")[0];
+
+	close.onclick = function(){
+		modal.style.display = "none";
+	}
+
+});
